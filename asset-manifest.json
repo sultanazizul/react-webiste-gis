@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/react-webiste-gis/static/css/main.f30a3940.css",
-    "main.js": "/react-webiste-gis/static/js/main.12f45833.js",
+    "main.js": "/react-webiste-gis/static/js/main.77b373e6.js",
     "static/js/453.1348aa39.chunk.js": "/react-webiste-gis/static/js/453.1348aa39.chunk.js",
     "static/media/spritesheet.svg": "/react-webiste-gis/static/media/spritesheet.a4e0eb7ad904a4858361.svg",
     "index.html": "/react-webiste-gis/index.html",
     "main.f30a3940.css.map": "/react-webiste-gis/static/css/main.f30a3940.css.map",
-    "main.12f45833.js.map": "/react-webiste-gis/static/js/main.12f45833.js.map",
+    "main.77b373e6.js.map": "/react-webiste-gis/static/js/main.77b373e6.js.map",
     "453.1348aa39.chunk.js.map": "/react-webiste-gis/static/js/453.1348aa39.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f30a3940.css",
-    "static/js/main.12f45833.js"
+    "static/js/main.77b373e6.js"
   ]
 }
