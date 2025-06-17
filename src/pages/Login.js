@@ -1,25 +1,20 @@
 import React, { useState } from "react";
-import { auth } from "../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../index.css"; // Pastikan file CSS sudah ada
+import useAuth from "../hooks/useAuth"; // Import custom hook
+import "../styles/index.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { loading, login } = useAuth(); // Dapatkan loading dan fungsi login dari hook
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
+    const success = await login(email, password); // Gunakan fungsi login dari hook
+    if (success) {
       navigate("/dashboard");
-    } catch (error) {
-      alert("Login gagal: " + error.message);
     }
-    setLoading(false);
   };
 
   return (
@@ -51,7 +46,6 @@ const Login = () => {
         </button>
       </form>
 
-      {/* Tambahan Link ke Register */}
       <p className="nav-text">
         Belum punya akun? <span onClick={() => navigate("/register")}>Register</span>
       </p>

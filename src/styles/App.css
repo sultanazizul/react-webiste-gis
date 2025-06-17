@@ -1,0 +1,17 @@
+/* src/styles/App.css */
+/* File ini bisa digunakan untuk gaya global yang spesifik untuk layout aplikasi,
+   namun dalam struktur ini, sebagian besar gaya sudah ada di index.css.
+   Anda bisa menambahkan gaya khusus komponen atau layout utama di sini. */
+
+.App {
+  text-align: center;
+  height: 100vh; /* Pastikan tinggi penuh untuk aplikasi React */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contoh gaya jika Anda ingin menambahkan sesuatu yang spesifik di App.css */
+/* .some-global-element {
+  background-color: #f0f0f0;
+  padding: 10px;
+} */

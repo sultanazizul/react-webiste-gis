@@ -1,0 +1,599 @@
+
+API RESPONSE GIS-API-RUAS-JALAN
+
+REGISTER
+POST
+https://gisapis.manpits.xyz/api/register
+{
+    "meta": {
+        "code": 200,
+        "message": "Successfully create user",
+        "data": {
+            "name": "testuser",
+            "email": "testuuser@gmail.com",
+            "updated_at": "2025-06-16T08:03:03.000000Z",
+            "created_at": "2025-06-16T08:03:03.000000Z",
+            "id": 498
+        }
+    }
+}
+
+LOGIN
+POST
+https://gisapis.manpits.xyz/api/login
+{
+    "meta": {
+        "code": 200,
+        "message": "Successfully logged in",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2lzYXBpcy5tYW5waXRzLnh5ei9hcGkvbG9naW4iLCJpYXQiOjE3NTAwNTg2MzUsImV4cCI6MTc1MDE0NTAzNSwibmJmIjoxNzUwMDU4NjM1LCJqdGkiOiJKWjZ2Zjd0bGNHTTRqYWhZIiwic3ViIjoiMjc1IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.nbegk87-_ckdtyy7Hg7jAeHoc33WNg8rBGIH_CFtCwQ",
+        "token-expired": 86399
+    }
+}
+
+GETUSER
+GET
+https://gisapis.manpits.xyz/api/user
+{
+    "meta": {
+        "code": 200,
+        "message": "Successfully get user"
+    },
+    "data": {
+        "user": {
+            "id": 275,
+            "name": "testuser",
+            "email": "testuser@gmail.com",
+            "email_verified_at": null,
+            "created_at": "2025-05-14T06:55:12.000000Z",
+            "updated_at": "2025-05-14T06:55:12.000000Z"
+        }
+    }
+}
+
+LOGOUT
+POST
+https://gisapis.manpits.xyz/api/logout
+{
+    "meta": {
+        "code": 200,
+        "message": "Successfully logged out"
+    },
+    "data": []
+}
+
+GetAllRegion
+GET
+https://gisapis.manpits.xyz/api/mregion
+{
+    "code": 200,
+    "token-expired": 86381,
+    "status": "success",
+    "provinsi": [
+        {
+            "id": 1,
+            "provinsi": "Bali"
+        }
+    ],
+    "kabupaten": [
+        {
+            "id": 1,
+            "prov_id": 1,
+            "kabupaten": "Jembrana"
+        },
+        {
+            "id": 2,
+            "prov_id": 1,
+            "kabupaten": "Tabanan"
+        },
+        {
+            "id": 3,
+            "prov_id": 1,
+            "kabupaten": "Badung"
+        },
+        {
+            "id": 4,
+            "prov_id": 1,
+            "kabupaten": "Denpasar"
+   
+      },
+
+GetProvinsiByProvinsiID
+https://gisapis.manpits.xyz/api/provinsi/1
+{
+    "code": 200,
+    "token-expired": 86026,
+    "status": "success",
+    "provinsi": [
+        {
+            "id": 1,
+            "value": "Bali"
+        }
+    ]
+}
+
+GetKabupatenByProvinsiID
+GET
+https://gisapis.manpits.xyz/api/kabupaten/1
+{
+    "code": 200,
+    "token-expired": 86007,
+    "status": "success",
+    "kabupaten": [
+        {
+            "id": 1,
+            "value": "Jembrana"
+        },
+        {
+            "id": 2,
+            "value": "Tabanan"
+        },
+        {
+            "id": 3,
+            "value": "Badung"
+        },
+        {
+            "id": 4,
+            "value": "Denpasar"
+        },
+        {
+            "id": 5,
+            "value": "Buleleng"
+        },
+        {
+            "id": 6,
+            "value": "Gianyar"
+        },
+        {
+            "id": 7,
+            "value": "Bangli"
+        },
+        {
+            "id": 8,
+            "value": "Klungkung"
+        },
+        {
+            "id": 9,
+            "value": "Karangasem"
+        }
+    ]
+}
+
+GetKecamatanByKabupatenID
+GET
+https://gisapis.manpits.xyz/api/kecamatan/1
+{
+    "code": 200,
+    "token-expired": 85992,
+    "status": "success",
+    "kecamatan": [
+        {
+            "id": 1,
+            "value": "NEGARA"
+        },
+        {
+            "id": 2,
+            "value": "JEMBRANA"
+        },
+        {
+            "id": 3,
+            "value": "MENDOYO"
+        },
+        {
+            "id": 4,
+            "value": "PEKUTATAN"
+        },
+        {
+            "id": 5,
+            "value": "MELAYA"
+        }
+    ]
+}
+
+GetDesaByKecamatanID
+GET
+https://gisapis.manpits.xyz/api/desa/1
+{
+    "code": 200,
+    "token-expired": 85976,
+    "status": "success",
+    "desa": [
+        {
+            "id": 1,
+            "value": "Cupel"
+        },
+        {
+            "id": 2,
+            "value": "Dauhwaru"
+        },
+        {
+            "id": 3,
+            "value": "Banjar Tengah"
+        },
+        {
+            "id": 4,
+            "value": "Loloan Timur"
+        },
+        {
+            "id": 5,
+            "value": "Baler Bale Agung"
+        },
+        {
+            "id": 6,
+            "value": "Dangin Tukadaya"
+        },
+        {
+            "id": 7,
+            "value": "Lelateng"
+        },
+        {
+            "id": 8,
+            "value": "Kaliakah"
+        },
+        {
+            "id": 9,
+            "value": "Yehkuning"
+        },
+        {
+            "id": 10,
+            "value": "Pengambengan"
+        },
+        {
+            "id": 11,
+            "value": "Baluk"
+        },
+        {
+            "id": 12,
+            "value": "Budeng"
+        },
+        {
+            "id": 13,
+            "value": "Tegal Badeng Timur"
+        },
+        {
+            "id": 14,
+            "value": "Batu Agung"
+        },
+        {
+            "id": 15,
+            "value": "Pendem"
+        },
+        {
+            "id": 16,
+            "value": "Loloan Barat"
+        },
+        {
+            "id": 17,
+            "value": "Berangbang"
+        },
+        {
+            "id": 18,
+            "value": "Sangkaragung"
+        },
+        {
+            "id": 19,
+            "value": "Perancak"
+        },
+        {
+            "id": 20,
+            "value": "Banyu Biru"
+        },
+        {
+            "id": 21,
+            "value": "Air Kuning"
+        },
+        {
+            "id": 22,
+            "value": "Tegal Badeng Barat"
+        }
+    ]
+}
+
+GetKecamatanByDesaID
+GET
+https://gisapis.manpits.xyz/api/kecamatanbydesaid/1
+{
+    "code": 200,
+    "desa": {
+        "id": 1,
+        "desa": "Cupel"
+    },
+    "kecamatan": {
+        "id": 1,
+        "kecamatan": "NEGARA"
+    },
+    "kabupaten": {
+        "id": 1,
+        "kabupaten": "Jembrana"
+    },
+    "provinsi": {
+        "id": 1,
+        "provinsi": "Bali"
+    }
+}
+
+GetKabupatenByKecamatanID
+GET
+https://gisapis.manpits.xyz/api/kabupatenbykecamatanid/1
+{
+    "code": 200,
+    "kecamatan": {
+        "id": 1,
+        "kecamatan": "NEGARA"
+    },
+    "kabupaten": {
+        "id": 1,
+        "kabupaten": "Jembrana"
+    },
+    "provinsi": {
+        "id": 1,
+        "provinsi": "Bali"
+    }
+}
+
+GetProvinsiByKabupatenID
+GET
+https://gisapis.manpits.xyz/api/provinsibykabupatenid/1
+{
+    "code": 200,
+    "kabupaten": {
+        "id": 1,
+        "kabupaten": "Jembrana"
+    },
+    "provinsi": {
+        "id": 1,
+        "provinsi": "Bali"
+    }
+}
+
+GetMasterEksistingJalan
+GET
+https://gisapis.manpits.xyz/api/meksisting
+{
+    "code": 200,
+    "token-expired": 85907,
+    "status": "success",
+    "eksisting": [
+        {
+            "id": 1,
+            "eksisting": "Tanah"
+        },
+        {
+            "id": 2,
+            "eksisting": "Tanah/Beton"
+        },
+        {
+            "id": 3,
+            "eksisting": "Perkerasan"
+        },
+        {
+            "id": 4,
+            "eksisting": "Koral"
+        },
+        {
+            "id": 5,
+            "eksisting": "Lapen"
+        },
+        {
+            "id": 6,
+            "eksisting": "Paving"
+        },
+        {
+            "id": 7,
+            "eksisting": "Hotmix"
+        },
+        {
+            "id": 8,
+            "eksisting": "Beton"
+        },
+        {
+            "id": 9,
+            "eksisting": "Beton/Lapen"
+        }
+    ]
+}
+
+GetMasterJenisJalan
+GET
+https://gisapis.manpits.xyz/api/mjenisjalan
+{
+    "code": 200,
+    "token-expired": 85889,
+    "status": "success",
+    "eksisting": [
+        {
+            "id": 1,
+            "jenisjalan": "Desa"
+        },
+        {
+            "id": 2,
+            "jenisjalan": "Kabupaten"
+        },
+        {
+            "id": 3,
+            "jenisjalan": "Provinsi"
+        }
+    ]
+}
+
+GetMasterKondisiJalan
+GET
+https://gisapis.manpits.xyz/api/mkondisi
+{
+    "code": 200,
+    "token-expired": 85869,
+    "status": "success",
+    "eksisting": [
+        {
+            "id": 1,
+            "kondisi": "Baik"
+        },
+        {
+            "id": 2,
+            "kondisi": "Sedang"
+        },
+        {
+            "id": 3,
+            "kondisi": "Rusak"
+        }
+    ]
+}
+
+GetAllRuasJalan
+GET
+https://gisapis.manpits.xyz/api/ruasjalan
+{
+    "code": 200,
+    "user": {
+        "id": 275,
+        "name": "testuser",
+        "email": "testuser@gmail.com",
+        "email_verified_at": null,
+        "created_at": "2025-05-14T06:55:12.000000Z",
+        "updated_at": "2025-05-14T06:55:12.000000Z"
+    },
+    "token-expired": 85854,
+    "status": "success",
+    "ruasjalan": [
+        {
+            "id": 3951,
+            "paths": "zbgs@wj}~Tp@`Ex@bF",
+            "desa_id": 509,
+            "kode_ruas": "80515",
+            "nama_ruas": "Jalan Pura Dalem",
+            "panjang": 240,
+            "lebar": 3,
+            "eksisting_id": 8,
+            "kondisi_id": 2,
+            "jenisjalan_id": 1,
+            "keterangan": "Jalan menujua pura dalem serongga"
+        },
+        {
+            "id": 3964,
+            "paths": "last@_e|}TNcHuF|@rEcVwPgJsJ_UYmPfCuOtDoH`@uQzKwsA",
+            "desa_id": 256,
+            "kode_ruas": "jalan-udayana",
+            "nama_ruas": "jalan udayana",
+            "panjang": 3913.9752893358964,
+            "lebar": 20,
+            "eksisting_id": 8,
+            "kondisi_id": 1,
+            "jenisjalan_id": 1,
+            "keterangan": "test"
+        },
+
+GetRuasJalanByID
+GET
+https://gisapis.manpits.xyz/api/ruasjalan/4205
+{
+    "code": 200,
+    "user": {
+        "id": 275,
+        "name": "testuser",
+        "email": "testuser@gmail.com",
+        "email_verified_at": null,
+        "created_at": "2025-05-14T06:55:12.000000Z",
+        "updated_at": "2025-05-14T06:55:12.000000Z"
+    },
+    "token-expired": 85356,
+    "status": "success",
+    "ruasjalan": {
+        "id": 4205,
+        "paths": "n~ms@idt}Tv_By`T`kChoF",
+        "desa_id": 90,
+        "kode_ruas": "888181",
+        "nama_ruas": "jalal",
+        "panjang": 16883,
+        "lebar": 2,
+        "eksisting_id": 5,
+        "kondisi_id": 1,
+        "jenisjalan_id": 1,
+        "keterangan": "Halll"
+    }
+}
+
+AddNewRuasJalan
+POST
+https://gisapis.manpits.xyz/api/ruasjalan
+{
+    "code": 200,
+    "token-expired": 85807,
+    "status": "success",
+    "ruasjalan": {
+        "paths": "l`is@asr~T@UHiAZyCD_D",
+        "desa_id": "473",
+        "kode_ruas": "001",
+        "nama_ruas": "Contoh Ruas",
+        "panjang": "227",
+        "lebar": "3",
+        "eksisting_id": "12",
+        "kondisi_id": "3",
+        "jenisjalan_id": "1",
+        "keterangan": "Test Jalan",
+        "user_id": 275,
+        "updated_at": "2025-06-16T07:33:47.000000Z",
+        "created_at": "2025-06-16T07:33:47.000000Z",
+        "id": 4260
+    }
+}
+
+EditRuasJalanByID
+PUT
+https://gisapis.manpits.xyz/api/ruasjalan/4260
+    {
+    "code": 200,
+    "user": {
+        "id": 275,
+        "name": "testuser",
+        "email": "testuser@gmail.com",
+        "email_verified_at": null,
+        "created_at": "2025-05-14T06:55:12.000000Z",
+        "updated_at": "2025-05-14T06:55:12.000000Z"
+    },
+    "token-expired": 85705,
+    "status": "success",
+    "ruasjalan": {
+        "id": 4260,
+        "paths": "l`is@asr~T@UHiAZyCD_D",
+        "desa_id": "473",
+        "kode_ruas": "001",
+        "nama_ruas": "Contoh Ruas Jalan Edited",
+        "panjang": "227",
+        "lebar": "3",
+        "eksisting_id": "12",
+        "kondisi_id": "3",
+        "jenisjalan_id": "1",
+        "keterangan": "Test Jalan",
+        "user_id": 275,
+        "updated_at": "2025-06-16T07:35:29.000000Z"
+    }
+}
+
+DeleteRuasJalanByID
+DEL
+https://gisapis.manpits.xyz/api/ruasjalan/4260
+ {
+    "code": 200,
+    "user": {
+        "id": 275,
+        "name": "testuser",
+        "email": "testuser@gmail.com",
+        "email_verified_at": null,
+        "created_at": "2025-05-14T06:55:12.000000Z",
+        "updated_at": "2025-05-14T06:55:12.000000Z"
+    },
+    "token-expired": 85688,
+    "status": "success",
+    "ruasjalan": {
+        "id": 4260,
+        "paths": "l`is@asr~T@UHiAZyCD_D",
+        "desa_id": 473,
+        "kode_ruas": "001",
+        "nama_ruas": "Contoh Ruas Jalan Edited",
+        "panjang": 227,
+        "lebar": 3,
+        "eksisting_id": 12,
+        "kondisi_id": 3,
+        "jenisjalan_id": 1,
+        "keterangan": "Test Jalan"
+    }
+}

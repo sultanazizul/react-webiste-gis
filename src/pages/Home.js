@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "../index.css"; // Pastikan file CSS sudah ada
+import "../styles/index.css"; // Pastikan file CSS sudah ada
+import logoBumi from "../assets/images/logo-bumi.png"; // Import gambar
 
 const Home = () => {
   const mapRef = useRef(null);
@@ -27,7 +28,7 @@ const Home = () => {
       {/* Header */}
       <div className="header">
         <div className="logo">
-          <img src="/logo-bumi.png" alt="Logo Bumi" />
+          <img src={logoBumi} alt="Logo Bumi" /> {/* Gunakan import gambar */}
         </div>
         <nav className="auth-links">
           <Link to="/login">Login</Link>

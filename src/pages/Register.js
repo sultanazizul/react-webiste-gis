@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import { auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../index.css"; // Pastikan file CSS sudah ada
+import useAuth from "../hooks/useAuth"; // Import custom hook
+import "../styles/index.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [name, setName] = useState(""); // Tambahkan state untuk nama
+  const { loading, register } = useAuth(); // Dapatkan loading dan fungsi register dari hook
+  const [error, setError] = useState(null); // State untuk menampilkan error spesifik
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
+    setError(null); // Bersihkan error sebelumnya
+    const success = await register(name, email, password); // Gunakan fungsi register dari hook
+    if (success) {
       navigate("/login");
-    } catch (error) {
-      setError(error.message);
+    } else {
+      // Error handling sudah ada di useAuth, tapi jika ingin menampilkan di UI
+      // Anda bisa menambahkan state error di useAuth dan mengembalikannya
+      setError("Registration failed. Please try again."); // Pesan error umum jika tidak berhasil
     }
-    setLoading(false);
   };
 
   return (
@@ -29,6 +29,16 @@ const Register = () => {
       <h2>Welcome</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleRegister}>
+        <div className="input-container">
+          <input
+            type="text" // Input untuk nama
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <label>Name</label>
+        </div>
+
         <div className="input-container">
           <input
             type="email"
@@ -54,7 +64,6 @@ const Register = () => {
         </button>
       </form>
 
-      {/* Tambahan Link ke Login */}
       <p className="nav-text">
         Sudah punya akun? <span onClick={() => navigate("/login")}>Login</span>
       </p>
