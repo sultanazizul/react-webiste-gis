@@ -318,9 +318,9 @@ button:disabled {
 }
 
 .menu-grid-item.active {
-  background-color: #007bff; /* Warna biru untuk aktif */
+  background-color: #313131; /* Warna biru untuk aktif */
   color: white; /* Teks putih untuk aktif */
-  border-color: #007bff;
+  border-color: #313131;
   box-shadow: 0 4px 8px rgba(0,123,255,0.2);
   transform: translateY(-2px); /* Efek sedikit terangkat */
 }
@@ -347,4 +347,19 @@ button:disabled {
 }
 .map-sidebar.collapsed .sidebar-toggle-button {
     align-self: center; 
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #313133;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

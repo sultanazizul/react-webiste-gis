@@ -1,4 +1,4 @@
-// src/components/MapComponent.js
+// src/components/map/MapComponent.js
 
 import React, { useEffect, useRef } from "react";
 import {
@@ -11,17 +11,19 @@ import {
   Polygon,
   Circle,
   FeatureGroup,
-  useMap, // Import useMap
+  useMap,
 } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
-import L from "leaflet";
+import L from "leaflet"; // Penting: import L untuk digunakan dengan Leaflet object
+import { FaEdit, FaTrash } from "react-icons/fa"; // Tetap di sini karena digunakan di dalam Popup JSX
 
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
+// PASTIKAN FILE-FILE INI ADA DI LOKASI BERIKUT: src/assets/images/
+import icon from "../../assets/images/marker-icon.png"; // Path benar setelah dikoreksi: keluar dari map/, keluar dari components/, lalu masuk ke assets/images/
+import iconShadow from "../../assets/images/marker-shadow.png"; // Path benar setelah dikoreksi
 
-import { getNameById } from "../utils/helpers";
+import { getNameById } from "../../utils/helpers"; // Path benar setelah dikoreksi
 
 const { BaseLayer } = LayersControl;
 
@@ -46,6 +48,7 @@ const PinkIcon = L.icon({
   className: 'huechange-pink'
 });
 
+// MapControls component definition moved back inside MapComponent.js
 const MapControls = ({ mapRef, featureGroupRef, selectedShape, selectedShapeType, isEditingMapShape, handleDeleteClickFromMapPopup }) => {
     const mapInstance = useMap();
 
@@ -81,11 +84,9 @@ const MapControls = ({ mapRef, featureGroupRef, selectedShape, selectedShapeType
                         mapInstance.setView(foundLayer.getLatLng(), 15);
                     }
                 }
-                // Pastikan popup tertutup saat mode edit diaktifkan
                 mapInstance.closePopup();
             }
         } else if (!isEditingMapShape && featureGroupRef.current) {
-            // Disable editing for all layers if not in editing mode
             featureGroupRef.current.eachLayer(layer => {
                 if (layer.editing && layer.editing.enabled()) {
                     layer.editing.disable();
@@ -94,16 +95,12 @@ const MapControls = ({ mapRef, featureGroupRef, selectedShape, selectedShapeType
         }
     }, [isEditingMapShape, selectedShape, featureGroupRef, mapInstance]);
 
-    // Handle when a shape is deleted via Leaflet.draw's internal delete tool
-    // This is important because the EditControl's remove tool only removes from the map,
-    // not from your Firebase data. You need to handle it.
     useEffect(() => {
         if (!featureGroupRef.current || !mapInstance) return;
 
         const handleDeleted = (e) => {
             e.layers.eachLayer((layer) => {
                 if (layer.options.id) {
-                    // Panggil fungsi delete dari props Dashboard
                     let type;
                     if (layer instanceof L.Marker) type = 'marker';
                     else if (layer instanceof L.Polyline && !(layer instanceof L.Polygon)) type = 'polyline';
@@ -117,7 +114,7 @@ const MapControls = ({ mapRef, featureGroupRef, selectedShape, selectedShapeType
             });
         };
 
-        const drawControl = mapInstance.editTools; // Access the draw control from the map instance
+        const drawControl = mapInstance.editTools;
         if (drawControl) {
             mapInstance.on(L.Draw.Event.DELETED, handleDeleted);
         }
@@ -143,17 +140,13 @@ const CustomMapComponent = ({
   ruasJalan,
   currentLocation,
   currentLocationDetails,
-  onMapClick, // Ini hanya akan dipicu jika tidak ada drawing tool yang aktif
+  onMapClick,
   onShapeCreated,
   onMarkerEdit,
   onPolylineEdit,
   onPolygonEdit,
   onCircleEdit,
-  onDeleteMarker, // Masih digunakan untuk hapus dari sidebar
-  onDeletePolyline, // Masih digunakan untuk hapus dari sidebar
-  onDeletePolygon, // Masih digunakan untuk hapus dari sidebar
-  onDeleteCircle, // Masih digunakan untuk hapus dari sidebar
-  onEditShape, // Ini digunakan untuk mereset selectedShape di Dashboard setelah edit selesai
+  onEditShape,
   selectedShape,
   selectedShapeType,
   isEditingMapShape,
@@ -164,7 +157,7 @@ const CustomMapComponent = ({
   kabupatenList,
   kecamatanList,
   desaList,
-  isDrawingForRuasJalan,
+  isDrawingForRuasJalan, // Prop ini mengontrol mode gambar ruas jalan
   handleEditClickFromMapPopup,
   handleDeleteClickFromMapPopup,
   openShapePopupAndCenterMap
@@ -178,8 +171,6 @@ const CustomMapComponent = ({
     'default': 'gray'
   };
 
-  // Callback for when Leaflet.draw finishes an edit.
-  // This is called AFTER the shape has been visually updated on the map by Leaflet.draw.
   const handleEdited = (e) => {
     e.layers.eachLayer((layer) => {
         if (!layer.options.id) {
@@ -197,12 +188,9 @@ const CustomMapComponent = ({
             onCircleEdit(e, layer.options.id);
         }
     });
-    // Penting: Setelah edit selesai, reset state di Dashboard
-    onEditShape(null, null); // Ini akan mereset selectedShape dan selectedShapeType, serta isEditingMapShape
+    onEditShape(null, null);
   };
 
-  // Callback for when Leaflet.draw finishes a delete.
-  // This is crucial to keep your Firebase data in sync.
   const handleDeleted = (e) => {
     e.layers.eachLayer((layer) => {
         if (layer.options.id) {
@@ -217,7 +205,6 @@ const CustomMapComponent = ({
             }
         }
     });
-    // Setelah penghapusan, pastikan mode edit di peta dinonaktifkan
     onEditShape(null, null);
   };
 
@@ -228,7 +215,6 @@ const CustomMapComponent = ({
       style={{ height: "100%", width: "100%" }}
       ref={mapRef}
       whenCreated={(map) => {
-        // Ini memastikan `onMapClick` dipanggil saat klik di peta tanpa menggambar
         map.on('click', onMapClick);
       }}
     >
@@ -250,57 +236,57 @@ const CustomMapComponent = ({
         <BaseLayer name="Google Terrain">
           <TileLayer url="https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}" />
         </BaseLayer>
-        <BaseLayer name="Google Hybrid">
+        <BaseLayer checked name="Google Hybrid">
           <TileLayer url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}" />
         </BaseLayer>
         <BaseLayer name="Esri World Imagery">
           <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
         </BaseLayer>
-        <BaseLayer checked name="CartoDB Positron">
+        <BaseLayer name="CartoDB Positron">
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
         </BaseLayer>
       </LayersControl>
 
-      {/* MapControls harus berada di dalam MapContainer untuk menggunakan useMap */}
       <MapControls 
         mapRef={mapRef} 
         featureGroupRef={featureGroupRef} 
         selectedShape={selectedShape} 
         selectedShapeType={selectedShapeType} 
         isEditingMapShape={isEditingMapShape}
-        handleDeleteClickFromMapPopup={handleDeleteClickFromMapPopup} // Pass this down
+        handleDeleteClickFromMapPopup={handleDeleteClickFromMapPopup}
       />
 
       <FeatureGroup ref={featureGroupRef}>
         <EditControl
           position="topright"
-          onEdited={handleEdited} // Gunakan handler yang telah didefinisikan
+          onEdited={handleEdited}
           onCreated={onShapeCreated}
-          onDeleted={handleDeleted} // Tambahkan handler untuk event penghapusan
+          onDeleted={handleDeleted}
           draw={{
             rectangle: false,
             circlemarker: false,
-            // Nonaktifkan alat gambar jika sedang dalam mode edit atau menggambar ruas jalan
+            // Logika baru untuk menampilkan tool draw:
+            // Jika sedang mengedit shape yang ada (isEditingMapShape), sembunyikan semua tool gambar.
+            // Jika sedang dalam mode "Tambah Ruas Jalan" (isDrawingForRuasJalan), hanya tampilkan polyline.
+            // Jika tidak dalam mode khusus, tampilkan semua tool gambar.
             marker: (isEditingMapShape || isDrawingForRuasJalan) ? false : { icon: DefaultIcon },
-            polyline: (isEditingMapShape || isDrawingForRuasJalan) ? false : { shapeOptions: { color: "blue", weight: 3 } },
+            polyline: isEditingMapShape ? false : { shapeOptions: { color: "blue", weight: 3 } }, // polyline tetap tampil jika isDrawingForRuasJalan
             polygon: (isEditingMapShape || isDrawingForRuasJalan) ? false : { shapeOptions: { color: "green", weight: 2 }, allowIntersection: false },
             circle: (isEditingMapShape || isDrawingForRuasJalan) ? false : { shapeOptions: { color: "red", weight: 2 } },
           }}
           edit={{
             featureGroup: featureGroupRef.current,
-            edit: isEditingMapShape, // Aktifkan/nonaktifkan tombol edit berdasarkan state isEditingMapShape
+            edit: isEditingMapShape,
             remove: true,
             poly: { allowIntersection: false }
           }}
         />
 
-        {/* Render Markers, Polylines, Polygons, Circles from Firebase inside FeatureGroup */}
         {markers.map((marker) => (
           <Marker
             key={marker.id}
             position={[marker.lat, marker.lng]}
             draggable={true}
-            // Penting: Simpan ID di options layer agar bisa ditemukan oleh EditControl
             options={{ id: marker.id }} 
           >
             <Popup>
@@ -357,7 +343,6 @@ const CustomMapComponent = ({
             color="blue"
             weight={3}
             opacity={0.7}
-            // Penting: Simpan ID di options layer agar bisa ditemukan oleh EditControl
             options={{ id: polyline.id }} 
           >
             <Popup>
@@ -397,7 +382,6 @@ const CustomMapComponent = ({
             weight={2}
             opacity={0.5}
             fillOpacity={0.2}
-            // Penting: Simpan ID di options layer agar bisa ditemukan oleh EditControl
             options={{ id: polygon.id }} 
           >
             <Popup>
@@ -406,7 +390,7 @@ const CustomMapComponent = ({
                 <p style={{ margin: "0 0 8px 0", fontSize: "12px", color: "#666" }}>Titik: {polygon.points.length}</p>
                 <button
                    onClick={() => handleEditClickFromMapPopup({ ...polygon, type: 'polygon' }, 'polygon')}
-                  style={{ backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "3px", padding: "5px 8px", fontSize: "11px", cursor: "pointer", marginRight: "5px" }}
+                  style={{ backgroundColor: "#007bff", color: "white", border: "none", padding: "5px 8px", borderRadius: "3px", cursor: "pointer", marginRight: "5px" }}
                 >
                   Edit
                 </button>
@@ -438,7 +422,6 @@ const CustomMapComponent = ({
             weight={2}
             opacity={0.7}
             fillOpacity={0.2}
-            // Penting: Simpan ID di options layer agar bisa ditemukan oleh EditControl
             options={{ id: circle.id }} 
           >
             <Popup>
@@ -447,7 +430,7 @@ const CustomMapComponent = ({
                 <p style={{ margin: "0 0 8px 0", fontSize: "12px", color: "#666" }}>Radius: {circle.radius.toFixed(2)}m</p>
                 <button
                    onClick={() => handleEditClickFromMapPopup({ ...circle, type: 'circle' }, 'circle')}
-                  style={{ backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "3px", padding: "5px 8px", fontSize: "11px", cursor: "pointer", marginRight: "5px" }}
+                  style={{ backgroundColor: "#007bff", color: "white", border: "none", padding: "5px 8px", borderRadius: "3px", cursor: "pointer", marginRight: "5px" }}
                 >
                   Edit
                 </button>
@@ -471,7 +454,6 @@ const CustomMapComponent = ({
         ))}
       </FeatureGroup>
 
-      {/* Render Current Location Marker (tetap di luar FeatureGroup jika tidak ingin diedit) */}
       {currentLocation && (
           <Marker position={currentLocation} icon={PinkIcon}>
             <Popup>
@@ -490,7 +472,6 @@ const CustomMapComponent = ({
           </Marker>
       )}
 
-      {/* Render Ruas Jalan from API (tetap di luar FeatureGroup jika tidak ingin diedit menggunakan EditControl) */}
       {ruasJalan && ruasJalan.map((rj) => {
           const polylineColor = kondisiColors[rj.kondisi_id] || kondisiColors.default;
 
@@ -503,7 +484,7 @@ const CustomMapComponent = ({
                 opacity={0.8}
                 eventHandlers={{
                     click: () => {
-                        // Ini bisa memicu tampilan detail di sidebar jika diperlukan
+                        // This can trigger sidebar details if needed
                     }
                 }}
             >
