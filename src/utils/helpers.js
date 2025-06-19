@@ -1,5 +1,7 @@
 // src/utils/helpers.js
 
+import { SiChatbot } from "react-icons/si";
+
 /**
  * Calculates the distance between two points on Earth using the Haversine formula.
  * @param {Array<number>} latlng1 - [latitude, longitude] of the first point.
@@ -50,3 +52,4 @@ export const getNameById = (list, id, nameKey) => {
   const item = list.find(item => String(item.id) === String(id));
   return item ? item[nameKey] : 'N/A';
 };
+

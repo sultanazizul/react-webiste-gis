@@ -224,12 +224,10 @@ button:disabled {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 20px;
   align-self: center; /* Pusatkan tombol toggle */
 }
 
@@ -242,7 +240,7 @@ button:disabled {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   margin-top: auto; /* Dorong ke bawah sidebar */
   text-align: center;
@@ -286,7 +284,7 @@ button:disabled {
 .sidebar-menu-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Tiga kolom per baris */
-  gap: 10px; /* Jarak antar item grid */
+  gap: 15px; /* Jarak antar item grid */
   width: 100%;
   padding: 10px; /* Sesuaikan padding */
   box-sizing: border-box; /* Pastikan padding tidak membuat lebar melebihi 100% */
